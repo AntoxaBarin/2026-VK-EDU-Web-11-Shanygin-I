@@ -1,1 +1,9 @@
-# 2026-VK-EDU-Web-11-Shanygin-I
+# StackUnderflow
+
+## 1. Run the server
+
+```bash
+cd public
+python3 -m http.server 8080 # or other port
+# Open http://localhost:8080
+```
