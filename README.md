@@ -4,19 +4,29 @@
 
 1. Run the server:
 
+Native run:
 ```bash
-cd public
-python3 -m http.server 8080 # or other port
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+
+python manage.py runserver
 # Open http://localhost:8080
+```
+
+Using Docker Compose:
+```bash
+docker-compose up --build
 ```
 
 ## Routes
 
-- `/index.html`
-- `/ask.html`
-- `/profile.html`
-- `/question.html`
-- `/tag.html`
-- `/hot.html`
-- `/signup.html`
-- `/login.html`
+- `/ (index.html)`
+- `/ask`
+- `/profile`
+- `/question`
+- `/tag`
+- `/hot`
+- `/signup`
+- `/login`
