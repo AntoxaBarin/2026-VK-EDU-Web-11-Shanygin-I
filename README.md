@@ -12,13 +12,14 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 python3 manage.py runserver
-# Open http://localhost:8080
 ```
 
 Using Docker Compose:
 ```bash
 docker-compose up --build
 ```
+
+2. Open http://localhost:8080
 
 ## Routes
 
