@@ -11,7 +11,7 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 
-python manage.py runserver
+python3 manage.py runserver
 # Open http://localhost:8080
 ```
 
