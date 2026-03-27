@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hot Questions - StackUnderflow</title>
-    <link rel="icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="icon" href="{% static 'static/img/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-2 col-6">
-                    <a href="index.html" class="text-white text-decoration-none">
+                    <a href="{% url 'index' %}" class="text-white text-decoration-none">
                         <h3 class="mb-0">StackUnderflow</h3>
                     </a>
                 </div>
@@ -27,8 +27,8 @@
                 </div>
                 <div class="col-md-4 col-6 order-md-3 order-2">
                     <div class="d-flex justify-content-end align-items-center">
-                        <a href="ask.html" class="btn btn-sm btn-primary me-3">Ask a Question</a>
-                        <a href="profile.html" class="d-flex align-items-center text-white text-decoration-none">
+                        <a href="{% url 'ask' %}" class="btn btn-sm btn-primary me-3">Ask a Question</a>
+                        <a href="{% url 'profile' %}" class="d-flex align-items-center text-white text-decoration-none">
                             <img src="static/img/avatar.jpg" alt="Avatar" class="rounded-circle me-2" width="40" height="40">
                             <span class="d-none d-md-inline">Sponge Bob</span>
                         </a>
@@ -44,7 +44,7 @@
                 <div class="col-lg-9 col-md-8 mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h2>Hot Questions</h2>
-                        <a href="index.html" class="btn btn-outline-secondary">New Questions</a>
+                        <a href="{% url 'index' %}" class="btn btn-outline-secondary">New Questions</a>
                     </div>
 
                     <div class="card mb-3 question-card">
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-md-11 col-10">
                                     <h5 class="card-title">
-                                        <a href="question.html" class="text-decoration-none">React vs Vue: what to choose for a new project?</a>
+                                        <a href="{% url 'question' %}" class="text-decoration-none">React vs Vue: what to choose for a new project?</a>
                                     </h5>
                                     <p class="card-text">I'm planning to start a new frontend project and can't decide between React and Vue. What are the advantages and disadvantages of each framework?</p>
                                     <div class="d-flex flex-wrap align-items-center gap-3">
@@ -69,12 +69,12 @@
                                             </button>
                                         </div>
                                         <span class="text-muted">
-                                            <a href="question.html" class="text-decoration-none">Answers: 23</a>
+                                            <a href="{% url 'question' %}" class="text-decoration-none">Answers: 23</a>
                                         </span>
                                         <div class="tags">
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">react</a>
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">vue</a>
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">frontend</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">react</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">vue</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">frontend</a>
                                         </div>
                                         <span class="text-muted ms-auto">5 hours ago</span>
                                     </div>
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="col-md-11 col-10">
                                     <h5 class="card-title">
-                                        <a href="question.html" class="text-decoration-none">How to optimize SQL queries in a large database?</a>
+                                        <a href="{% url 'question' %}" class="text-decoration-none">How to optimize SQL queries in a large database?</a>
                                     </h5>
                                     <p class="card-text">I have a table with millions of records, and queries are running very slowly. What are some optimization methods?</p>
                                     <div class="d-flex flex-wrap align-items-center gap-3">
@@ -105,12 +105,12 @@
                                             </button>
                                         </div>
                                         <span class="text-muted">
-                                            <a href="question.html" class="text-decoration-none">Answers: 12</a>
+                                            <a href="{% url 'question' %}" class="text-decoration-none">Answers: 12</a>
                                         </span>
                                         <div class="tags">
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">sql</a>
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">database</a>
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">optimization</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">sql</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">database</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">optimization</a>
                                         </div>
                                         <span class="text-muted ms-auto">2 days ago</span>
                                     </div>
@@ -141,14 +141,14 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex flex-wrap gap-2">
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">c++</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">javascript</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">django</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">python</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">rust</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">linux kernel</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">profiling</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">frontend</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">c++</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">javascript</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">django</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">python</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">rust</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">linux kernel</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">profiling</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">frontend</a>
                             </div>
                         </div>
                     </div>

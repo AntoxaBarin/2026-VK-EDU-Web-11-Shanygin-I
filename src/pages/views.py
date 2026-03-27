@@ -20,3 +20,6 @@ def question(request):
 
 def ask(request):
     return render(request, 'ask.html')
+
+def tag(request):
+    return render(request, 'tag.html')

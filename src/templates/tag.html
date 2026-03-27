@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-2 col-6">
-                    <a href="index.html" class="text-white text-decoration-none">
+                    <a href="{% url 'index' %}" class="text-white text-decoration-none">
                         <h3 class="mb-0">StackUnderflow</h3>
                     </a>
                 </div>
@@ -27,8 +27,8 @@
                 </div>
                 <div class="col-md-4 col-6 order-md-3 order-2">
                     <div class="d-flex justify-content-end align-items-center">
-                        <a href="ask.html" class="btn btn-sm btn-primary me-3">Ask a Question</a>
-                        <a href="profile.html" class="d-flex align-items-center text-white text-decoration-none">
+                        <a href="{% url 'ask' %}" class="btn btn-sm btn-primary me-3">Ask a Question</a>
+                        <a href="{% url 'profile' %}" class="d-flex align-items-center text-white text-decoration-none">
                             <img src="static/img/avatar.jpg" alt="Avatar" class="rounded-circle me-2" width="40" height="40">
                             <span class="d-none d-md-inline">Sponge Bob</span>
                         </a>
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-md-11 col-10">
                                     <h5 class="card-title">
-                                        <a href="question.html" class="text-decoration-none">How to properly use a virtual environment in Python?</a>
+                                        <a href="{% url 'question' %}" class="text-decoration-none">How to properly use a virtual environment in Python?</a>
                                     </h5>
                                     <p class="card-text">I'm just starting to learn Python and I've heard about virtual environments. Why are they needed and how to use them correctly? What are the best practices?</p>
                                     <div class="d-flex flex-wrap align-items-center gap-3">
@@ -69,12 +69,12 @@
                                             </button>
                                         </div>
                                         <span class="text-muted">
-                                            <a href="question.html" class="text-decoration-none">Answers: 15</a>
+                                            <a href="{% url 'signup' %}" class="text-decoration-none">Answers: 15</a>
                                         </span>
                                         <div class="tags">
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">python</a>
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">virtualenv</a>
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">pip</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">python</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">virtualenv</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">pip</a>
                                         </div>
                                         <span class="text-muted ms-auto">2 hours ago</span>
                                     </div>
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="col-md-11 col-10">
                                     <h5 class="card-title">
-                                        <a href="question.html" class="text-decoration-none">Problems with migrations in Django</a>
+                                        <a href="{% url 'question' %}" class="text-decoration-none">Problems with migrations in Django</a>
                                     </h5>
                                     <p class="card-text">When trying to run migrations I get the error "No migrations to apply". I added a new field to the model, created a migration, but it doesn't get applied.</p>
                                     <div class="d-flex flex-wrap align-items-center gap-3">
@@ -105,12 +105,12 @@
                                             </button>
                                         </div>
                                         <span class="text-muted">
-                                            <a href="question.html" class="text-decoration-none">Answers: 7</a>
+                                            <a href="{% url 'question' %}" class="text-decoration-none">Answers: 7</a>
                                         </span>
                                         <div class="tags">
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">django</a>
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">python</a>
-                                            <a href="tag.html" class="badge bg-secondary text-decoration-none">migrations</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">django</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">python</a>
+                                            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">migrations</a>
                                         </div>
                                         <span class="text-muted ms-auto">1 day ago</span>
                                     </div>
@@ -143,14 +143,14 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex flex-wrap gap-2">
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">python</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">javascript</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">django</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">react</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">css</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">html</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">backend</a>
-                                <a href="tag.html" class="badge bg-secondary text-decoration-none">frontend</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">python</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">javascript</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">django</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">react</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">css</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">html</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">backend</a>
+                                <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">frontend</a>
                             </div>
                         </div>
                     </div>
