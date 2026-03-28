@@ -9,81 +9,43 @@
     <a href="{% url 'index' %}" class="btn btn-outline-secondary">New Questions</a>
 </div>
 
+{% for question in page %}
 <div class="card mb-3 question-card">
     <div class="card-body">
         <div class="row">
             <div class="col-md-1 col-2 text-center">
-                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle img-fluid mb-2" width="60" height="60">
+                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar"
+                    class="rounded-circle img-fluid mb-2" width="60" height="60">
             </div>
             <div class="col-md-11 col-10">
                 <h5 class="card-title">
-                    <a href="{% url 'question' %}" class="text-decoration-none">React vs Vue: what to choose for a new project?</a>
+                    <a href="{% url 'question' question.id %}" class="text-decoration-none">{{ question.title }}</a>
                 </h5>
-                <p class="card-text">I'm planning to start a new frontend project and can't decide between React and Vue. What are the advantages and disadvantages of each framework?</p>
-                <div class="d-flex flex-wrap align-items-center gap-3">
-                    <div class="vote-widget">
-                        <button class="btn btn-sm btn-outline-success active"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">128</span>
-                        <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
-                    </div>
-                    <span class="text-muted">
-                        <a href="{% url 'question' %}" class="text-decoration-none">Answers: 23</a>
-                    </span>
-                    <div class="tags">
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">react</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">vue</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">frontend</a>
-                    </div>
-                    <span class="text-muted ms-auto">5 hours ago</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card mb-3 question-card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-1 col-2 text-center">
-                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle img-fluid mb-2" width="60" height="60">
-            </div>
-            <div class="col-md-11 col-10">
-                <h5 class="card-title">
-                    <a href="{% url 'question' %}" class="text-decoration-none">How to optimize SQL queries in a large database?</a>
-                </h5>
-                <p class="card-text">I have a table with millions of records, and queries are running very slowly. What are some optimization methods?</p>
+                <p class="card-text">{{ question.text }}</p>
                 <div class="d-flex flex-wrap align-items-center gap-3">
                     <div class="vote-widget">
                         <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">87</span>
+                        <span class="mx-2 fw-bold">{{ question.votes }}</span>
                         <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
                     </div>
                     <span class="text-muted">
-                        <a href="{% url 'question' %}" class="text-decoration-none">Answers: 12</a>
+                        <a href="{% url 'question' question.id %}" class="text-decoration-none">Answers: {{
+                            question.answers }}</a>
                     </span>
                     <div class="tags">
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">sql</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">database</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">optimization</a>
+                        {% for tag in question.tags %}
+                        <a href="{% url 'tag' tag %}" class="badge bg-secondary text-decoration-none">{{ tag }}</a>
+                        {% endfor %}
                     </div>
-                    <span class="text-muted ms-auto">2 days ago</span>
+                    <span class="text-muted ms-auto">{{ question.created_at }}</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% empty %}
+<p class="text-muted">No questions yet.</p>
+{% endfor %}
 
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-        </li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
+{% include 'questions/includes/pagination.html' %}
 {% endblock %}

@@ -1,106 +1,71 @@
 {% extends 'questions/base.html' %}
 {% load static %}
 
-{% block title %}Question - StackUnderflow{% endblock %}
+{% block title %}{{ question.title }} - StackUnderflow{% endblock %}
 
 {% block content %}
 <div class="card mb-4">
     <div class="card-body">
         <div class="row">
             <div class="col-md-1 col-2 text-center">
-                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle img-fluid mb-2" width="60" height="60">
+                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar"
+                    class="rounded-circle img-fluid mb-2" width="60" height="60">
             </div>
             <div class="col-md-11 col-10">
-                <h2 class="card-title mb-3">How to properly use virtual environments in Python?</h2>
-                <p class="card-text">I'm just starting to learn Python and heard about virtual environments. Why are they needed and how to use them properly? What are the best practices?</p>
-                <p class="card-text">I tried using venv, but don't fully understand when to create a new environment and when I can use an existing one. Also interested in how to properly manage dependencies in a project.</p>
+                <h2 class="card-title mb-3">{{ question.title }}</h2>
+                <p class="card-text">{{ question.text }}</p>
                 <div class="d-flex flex-wrap align-items-center gap-3 mt-3">
                     <div class="vote-widget">
                         <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">42</span>
+                        <span class="mx-2 fw-bold">{{ question.votes }}</span>
                         <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
                     </div>
                     <div class="tags">
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">python</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">virtualenv</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">pip</a>
+                        {% for tag in question.tags %}
+                        <a href="{% url 'tag' tag %}" class="badge bg-secondary text-decoration-none">{{ tag }}</a>
+                        {% endfor %}
                     </div>
-                    <span class="text-muted ms-auto">2 hours ago</span>
+                    <span class="text-muted ms-auto">{{ question.created_at }}</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<h4 class="mb-3">Answers (15)</h4>
+<h4 class="mb-3">Answers ({{ question.answers_count }})</h4>
 
-<div class="card mb-3 answer-card">
+{% for answer in page %}
+<div class="card mb-3 answer-card {% if answer.is_correct %}border-success{% endif %}">
     <div class="card-body">
         <div class="row">
             <div class="col-md-1 col-2 text-center">
-                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle img-fluid mb-2" width="50" height="50">
+                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar"
+                    class="rounded-circle img-fluid mb-2" width="50" height="50">
             </div>
             <div class="col-md-11 col-10">
-                <p class="card-text">Virtual environments in Python are isolated environments for installing packages. They help avoid conflicts between dependencies of different projects.</p>
-                <p class="card-text">Basic commands:</p>
-                <pre class="bg-light p-2 rounded"><code>python -m venv myenv
-source myenv/bin/activate  # for Linux/Mac
-myenv\Scripts\activate.bat  # for Windows
-pip install package_name
-pip freeze > requirements.txt</code></pre>
-                <p class="card-text">I recommend creating a new environment for each project. This is the best practice!</p>
-                <div class="d-flex align-items-center gap-3 mt-3">
-                    <div class="vote-widget">
-                        <button class="btn btn-sm btn-outline-success active"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">35</span>
-                        <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
-                    </div>
-                    <button class="btn btn-sm btn-success">✓ Correct Answer</button>
-                    <span class="text-muted ms-auto">1 hour ago</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card mb-3 answer-card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-1 col-2 text-center">
-                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle img-fluid mb-2" width="50" height="50">
-            </div>
-            <div class="col-md-11 col-10">
-                <p class="card-text">An alternative to venv is poetry or pipenv. They provide a more convenient interface for managing dependencies and virtual environments.</p>
-                <p class="card-text">Poetry automatically creates and manages the virtual environment, and also allows you to easily separate production and development dependencies.</p>
+                <p class="card-text">{{ answer.text }}</p>
                 <div class="d-flex align-items-center gap-3 mt-3">
                     <div class="vote-widget">
                         <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">12</span>
+                        <span class="mx-2 fw-bold">{{ answer.votes }}</span>
                         <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
                     </div>
+                    {% if answer.is_correct %}
+                    <button class="btn btn-sm btn-success">✓ Correct Answer</button>
+                    {% else %}
                     <button class="btn btn-sm btn-outline-secondary">Mark as Correct</button>
-                    <span class="text-muted ms-auto">30 minutes ago</span>
+                    {% endif %}
+                    <span class="text-muted ms-auto">{{ answer.created_at }}</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endfor %}
 
-<nav aria-label="Page navigation" class="mb-4">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-        </li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
+{% include 'questions/includes/pagination.html' %}
 
-<div class="card">
+<div class="card mt-4">
     <div class="card-header bg-light">
         <h5 class="mb-0">Your Answer</h5>
     </div>

@@ -9,115 +9,42 @@
     <a href="{% url 'hot' %}" class="btn btn-outline-secondary">Hot Questions</a>
 </div>
 
+{% for question in page %}
 <div class="card mb-3 question-card">
     <div class="card-body">
         <div class="row">
             <div class="col-md-1 col-2 text-center">
-                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle img-fluid mb-2" width="60" height="60">
+                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar"
+                    class="rounded-circle img-fluid mb-2" width="60" height="60">
             </div>
             <div class="col-md-11 col-10">
                 <h5 class="card-title">
-                    <a href="{% url 'question' %}" class="text-decoration-none">How to properly use virtual environments in Python?</a>
+                    <a href="{% url 'question' question.id %}" class="text-decoration-none">{{ question.title }}</a>
                 </h5>
-                <p class="card-text">I'm just starting to learn Python and heard about virtual environments. Why are they needed and how to use them properly? What are the best practices?</p>
+                <p class="card-text">{{ question.text }}</p>
                 <div class="d-flex flex-wrap align-items-center gap-3">
                     <div class="vote-widget">
                         <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">42</span>
+                        <span class="mx-2 fw-bold">{{ question.votes }}</span>
                         <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
                     </div>
                     <span class="text-muted">
-                        <a href="{% url 'question' %}" class="text-decoration-none">Answers: 15</a>
+                        <a href="{% url 'question' question.id %}" class="text-decoration-none">Answers: {{ question.answers }}</a>
                     </span>
                     <div class="tags">
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">python</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">virtualenv</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">pip</a>
+                        {% for tag in question.tags %}
+                        <a href="{% url 'tag' tag %}" class="badge bg-secondary text-decoration-none">{{ tag }}</a>
+                        {% endfor %}
                     </div>
-                    <span class="text-muted ms-auto">2 hours ago</span>
+                    <span class="text-muted ms-auto">{{ question.created_at }}</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% empty %}
+<p class="text-muted">No questions yet.</p>
+{% endfor %}
 
-<div class="card mb-3 question-card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-1 col-2 text-center">
-                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle img-fluid mb-2" width="60" height="60">
-            </div>
-            <div class="col-md-11 col-10">
-                <h5 class="card-title">
-                    <a href="{% url 'question' %}" class="text-decoration-none">React vs Vue: which to choose for a new project?</a>
-                </h5>
-                <p class="card-text">Planning to start a new frontend project and can't decide between React and Vue. What are the advantages and disadvantages of each framework?</p>
-                <div class="d-flex flex-wrap align-items-center gap-3">
-                    <div class="vote-widget">
-                        <button class="btn btn-sm btn-outline-success active"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">128</span>
-                        <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
-                    </div>
-                    <span class="text-muted">
-                        <a href="{% url 'question' %}" class="text-decoration-none">Answers: 23</a>
-                    </span>
-                    <div class="tags">
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">react</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">vue</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">frontend</a>
-                    </div>
-                    <span class="text-muted ms-auto">5 hours ago</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card mb-3 question-card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-1 col-2 text-center">
-                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle img-fluid mb-2" width="60" height="60">
-            </div>
-            <div class="col-md-11 col-10">
-                <h5 class="card-title">
-                    <a href="{% url 'question' %}" class="text-decoration-none">CSS Grid vs Flexbox: when to use which?</a>
-                </h5>
-                <p class="card-text">I can't figure out when it's better to use CSS Grid and when Flexbox. Are there any rules or recommendations?</p>
-                <div class="d-flex flex-wrap align-items-center gap-3">
-                    <div class="vote-widget">
-                        <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">63</span>
-                        <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
-                    </div>
-                    <span class="text-muted">
-                        <a href="{% url 'question' %}" class="text-decoration-none">Answers: 18</a>
-                    </span>
-                    <div class="tags">
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">css</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">grid</a>
-                        <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">flexbox</a>
-                    </div>
-                    <span class="text-muted ms-auto">3 days ago</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-        </li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
+{% include 'questions/includes/pagination.html' %}
 {% endblock %}

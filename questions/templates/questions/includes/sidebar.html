@@ -5,14 +5,14 @@
     </div>
     <div class="card-body">
         <div class="d-flex flex-wrap gap-2">
-            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">python</a>
-            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">javascript</a>
-            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">django</a>
-            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">react</a>
-            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">css</a>
-            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">html</a>
-            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">backend</a>
-            <a href="{% url 'tag' %}" class="badge bg-secondary text-decoration-none">frontend</a>
+            <a href="{% url 'tag' 'python' %}" class="badge bg-secondary text-decoration-none">python</a>
+            <a href="{% url 'tag' 'javascript' %}" class="badge bg-secondary text-decoration-none">javascript</a>
+            <a href="{% url 'tag' 'django' %}" class="badge bg-secondary text-decoration-none">django</a>
+            <a href="{% url 'tag' 'react' %}" class="badge bg-secondary text-decoration-none">react</a>
+            <a href="{% url 'tag' 'css' %}" class="badge bg-secondary text-decoration-none">css</a>
+            <a href="{% url 'tag' 'html' %}" class="badge bg-secondary text-decoration-none">html</a>
+            <a href="{% url 'tag' 'backend' %}" class="badge bg-secondary text-decoration-none">backend</a>
+            <a href="{% url 'tag' 'frontend' %}" class="badge bg-secondary text-decoration-none">frontend</a>
         </div>
     </div>
 </div>
@@ -25,25 +25,29 @@
         <ul class="list-unstyled">
             <li class="mb-2">
                 <a href="#" class="text-decoration-none d-flex align-items-center">
-                    <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle me-2" width="30" height="30">
+                    <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle me-2"
+                        width="30" height="30">
                     <span>Sponge Bob</span>
                 </a>
             </li>
             <li class="mb-2">
                 <a href="#" class="text-decoration-none d-flex align-items-center">
-                    <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle me-2" width="30" height="30">
+                    <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle me-2"
+                        width="30" height="30">
                     <span>Patrick</span>
                 </a>
             </li>
             <li class="mb-2">
                 <a href="#" class="text-decoration-none d-flex align-items-center">
-                    <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle me-2" width="30" height="30">
+                    <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle me-2"
+                        width="30" height="30">
                     <span>Squidward</span>
                 </a>
             </li>
             <li class="mb-2">
                 <a href="#" class="text-decoration-none d-flex align-items-center">
-                    <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle me-2" width="30" height="30">
+                    <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle me-2"
+                        width="30" height="30">
                     <span>Sandy</span>
                 </a>
             </li>
