@@ -29,11 +29,10 @@
                         <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
                     </div>
                     <span class="text-muted">
-                        <a href="{% url 'question' question.id %}" class="text-decoration-none">Answers: {{
-                            question.answers }}</a>
+                        <a href="{% url 'question' question.id %}" class="text-decoration-none">Answers: {{ question.answers_count }}</a>
                     </span>
                     <div class="tags">
-                        {% for tag in question.tags %}
+                        {% for tag in question.tags.all %}
                         <a href="{% url 'tag' tag %}" class="badge bg-secondary text-decoration-none">{{ tag }}</a>
                         {% endfor %}
                     </div>
