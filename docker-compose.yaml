@@ -1,0 +1,12 @@
+services:
+  stack_underflow:
+    build: .
+    image: "stack_underflow:latest"
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+      - media:/app/media
+
+volumes:
+  media:

@@ -1,0 +1,70 @@
+{% extends 'questions/base.html' %}
+
+{% block title %}Ask a Question - StackUnderflow{% endblock %}
+
+{% block layout %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <h2 class="mb-4">Ask a Question</h2>
+
+        <div class="alert alert-danger d-none" role="alert">
+            Please fix the errors in the form.
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="questionTitle" class="form-label">Question Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="questionTitle" placeholder="Enter a brief question title" maxlength="200" required>
+                        <div class="form-text">Maximum 200 characters. Try to formulate the question clearly and concisely.</div>
+                        <div class="invalid-feedback d-none">
+                            Title is required and must be at least 10 characters.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="questionText" class="form-label">Detailed Description <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="questionText" rows="8" placeholder="Describe your problem in detail..." required></textarea>
+                        <div class="form-text">Minimum 50 characters, maximum 10000 characters. Include all necessary details, code (if any), and what you've already tried.</div>
+                        <div class="invalid-feedback d-none">
+                            Description must contain at least 50 characters.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="questionTags" class="form-label">Tags <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="questionTags" placeholder="python, django, web" maxlength="100">
+                        <div class="form-text">Enter up to 5 tags separated by commas. Tags will help others find your question.</div>
+                        <div class="invalid-feedback d-none">
+                            At least one tag is required. Maximum 5 tags.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="questionCode" class="form-label">Code (optional)</label>
+                        <textarea class="form-control font-monospace" id="questionCode" rows="6" placeholder="Paste your code here..."></textarea>
+                        <div class="form-text">If your question is related to code, paste it here for better understanding of the problem.</div>
+                    </div>
+
+                    <div class="alert alert-info" role="alert">
+                        <h6 class="alert-heading">Tips for writing a good question:</h6>
+                        <ul class="mb-0">
+                            <li>Use a clear and specific title</li>
+                            <li>Describe the problem in detail and structure</li>
+                            <li>Indicate what you've already tried</li>
+                            <li>Add code examples if applicable</li>
+                            <li>Check spelling and grammar</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Publish Question</button>
+                        <a href="{% url 'index' %}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
