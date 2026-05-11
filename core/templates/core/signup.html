@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - StackUnderflow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <h2 class="mb-4 text-center">Sign Up</h2>
+
+        <div class="alert alert-danger d-none" role="alert">
+            Please correct the errors in the form.
+        </div>
+
+        <div class="card">
+            <div class="card-body p-4">
+                <form>
+                    <div class="mb-3">
+                        <label for="signupUsername" class="form-label">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="signupUsername" placeholder="Enter username" maxlength="50" required>
+                        <div class="form-text">From 3 to 50 characters. Letters, numbers, and underscores only.</div>
+                        <div class="invalid-feedback d-none">
+                            Username must be between 3 and 50 characters.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="signupEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="signupEmail" placeholder="example@email.com" required>
+                        <div class="invalid-feedback d-none">
+                            You entered an invalid email. Please check the format.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="signupPassword" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="signupPassword" placeholder="Create a strong password" required>
+                        <div class="form-text">Minimum 8 characters, including letters and numbers.</div>
+                        <div class="invalid-feedback d-none">
+                            Password must be at least 8 characters long, including letters and numbers.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="signupPasswordConfirm" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="signupPasswordConfirm" placeholder="Repeat password" required>
+                        <div class="invalid-feedback d-none">
+                            Passwords do not match.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="signupAvatar" class="form-label">Avatar (optional)</label>
+                        <input type="file" class="form-control" id="signupAvatar" accept="image/*">
+                        <div class="form-text">Upload an image in JPG, PNG, or GIF format. Maximum size 5 MB.</div>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                        <label class="form-check-label" for="agreeTerms">
+                            I accept the <a href="#" class="text-decoration-none">terms of use</a> and
+                            <a href="#" class="text-decoration-none">privacy policy</a>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="invalid-feedback d-none">
+                            You must accept the terms of use.
+                        </div>
+                    </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="text-decoration-none">Log in</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'questions/base.html' %}
+{% load static %}
+
+{% block title %}{{ question.title }} - StackUnderflow{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-1 col-2 text-center">
+                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar"
+                    class="rounded-circle img-fluid mb-2" width="60" height="60">
+            </div>
+            <div class="col-md-11 col-10">
+                <h2 class="card-title mb-3">{{ question.title }}</h2>
+                <p class="card-text">{{ question.text }}</p>
+                <div class="d-flex flex-wrap align-items-center gap-3 mt-3">
+                    <div class="vote-widget">
+                        <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
+                        <span class="mx-2 fw-bold">{{ question.votes }}</span>
+                        <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
+                    </div>
+                    <div class="tags">
+                        {% for tag in question.tags.all %}
+                        <a href="{% url 'tag' tag %}" class="badge bg-secondary text-decoration-none">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    <span class="text-muted ms-auto">{{ question.created_at }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="mb-3">Answers ({{ question.answers_count }})</h4>
+
+{% for answer in page %}
+<div class="card mb-3 answer-card {% if answer.is_correct %}border-success{% endif %}">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-1 col-2 text-center">
+                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar"
+                    class="rounded-circle img-fluid mb-2" width="50" height="50">
+            </div>
+            <div class="col-md-11 col-10">
+                <p class="card-text">{{ answer.text }}</p>
+                <div class="d-flex align-items-center gap-3 mt-3">
+                    <div class="vote-widget">
+                        <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
+                        <span class="mx-2 fw-bold">{{ answer.votes }}</span>
+                        <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
+                    </div>
+                    {% if answer.is_correct %}
+                    <button class="btn btn-sm btn-success">✓ Correct Answer</button>
+                    {% else %}
+                    <button class="btn btn-sm btn-outline-secondary">Mark as Correct</button>
+                    {% endif %}
+                    <span class="text-muted ms-auto">{{ answer.created_at }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% include 'questions/includes/pagination.html' %}
+
+<div class="card mt-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Your Answer</h5>
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="mb-3">
+                <label for="answerText" class="form-label">Answer Text</label>
+                <textarea class="form-control" id="answerText" rows="6" placeholder="Enter your answer..."></textarea>
+                <div class="form-text">Minimum 50 characters, maximum 5000 characters</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Answer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
