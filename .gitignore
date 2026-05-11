@@ -39,7 +39,6 @@ ENV/
 *.pyc
 local_settings.py
 media/
-static/
 
 node_modules/
 npm-debug.log*
