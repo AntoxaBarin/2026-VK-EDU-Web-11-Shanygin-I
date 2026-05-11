@@ -8,17 +8,28 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-1 col-2 text-center">
+                {% if question.author.profile.avatar %}
+                <img src="{{ question.author.profile.avatar.url }}" alt="Avatar"
+                    class="rounded-circle img-fluid mb-2" width="60" height="60">
+                {% else %}
                 <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar"
                     class="rounded-circle img-fluid mb-2" width="60" height="60">
+                {% endif %}
             </div>
             <div class="col-md-11 col-10">
                 <h2 class="card-title mb-3">{{ question.title }}</h2>
                 <p class="card-text">{{ question.text }}</p>
                 <div class="d-flex flex-wrap align-items-center gap-3 mt-3">
                     <div class="vote-widget">
+                        {% if user.is_authenticated %}
                         <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
                         <span class="mx-2 fw-bold">{{ question.votes }}</span>
                         <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
+                        {% else %}
+                        <button class="btn btn-sm btn-outline-success" disabled title="Войдите, чтобы голосовать"><span>👍</span></button>
+                        <span class="mx-2 fw-bold">{{ question.votes }}</span>
+                        <button class="btn btn-sm btn-outline-danger" disabled title="Войдите, чтобы голосовать"><span>👎</span></button>
+                        {% endif %}
                     </div>
                     <div class="tags">
                         {% for tag in question.tags.all %}
@@ -35,20 +46,31 @@
 <h4 class="mb-3">Answers ({{ question.answers_count }})</h4>
 
 {% for answer in page %}
-<div class="card mb-3 answer-card {% if answer.is_correct %}border-success{% endif %}">
+<div id="answer-{{ answer.pk }}" class="card mb-3 answer-card {% if answer.is_correct %}border-success{% endif %}">
     <div class="card-body">
         <div class="row">
             <div class="col-md-1 col-2 text-center">
+                {% if answer.author.profile.avatar %}
+                <img src="{{ answer.author.profile.avatar.url }}" alt="Avatar"
+                    class="rounded-circle img-fluid mb-2" width="50" height="50">
+                {% else %}
                 <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar"
                     class="rounded-circle img-fluid mb-2" width="50" height="50">
+                {% endif %}
             </div>
             <div class="col-md-11 col-10">
                 <p class="card-text">{{ answer.text }}</p>
                 <div class="d-flex align-items-center gap-3 mt-3">
                     <div class="vote-widget">
+                        {% if user.is_authenticated %}
                         <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
                         <span class="mx-2 fw-bold">{{ answer.votes }}</span>
                         <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
+                        {% else %}
+                        <button class="btn btn-sm btn-outline-success" disabled title="Войдите, чтобы голосовать"><span>👍</span></button>
+                        <span class="mx-2 fw-bold">{{ answer.votes }}</span>
+                        <button class="btn btn-sm btn-outline-danger" disabled title="Войдите, чтобы голосовать"><span>👎</span></button>
+                        {% endif %}
                     </div>
                     {% if answer.is_correct %}
                     <button class="btn btn-sm btn-success">✓ Correct Answer</button>
@@ -70,14 +92,25 @@
         <h5 class="mb-0">Your Answer</h5>
     </div>
     <div class="card-body">
-        <form>
+        {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
             <div class="mb-3">
-                <label for="answerText" class="form-label">Answer Text</label>
-                <textarea class="form-control" id="answerText" rows="6" placeholder="Enter your answer..."></textarea>
-                <div class="form-text">Minimum 50 characters, maximum 5000 characters</div>
+                <label for="{{ form.text.id_for_label }}" class="form-label">Answer Text</label>
+                {{ form.text }}
+                {% if form.text.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.text.errors %}{{ error }}{% endfor %}
+                </div>
+                {% endif %}
             </div>
             <button type="submit" class="btn btn-primary">Submit Answer</button>
         </form>
+        {% else %}
+        <p class="text-muted mb-0">
+            <a href="{% url 'login' %}?next={{ request.path }}">Войдите</a>, чтобы оставить ответ.
+        </p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

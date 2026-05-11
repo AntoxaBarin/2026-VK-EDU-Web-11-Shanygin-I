@@ -29,8 +29,24 @@
                 <div class="col-md-4 col-6 order-md-3 order-2">
                     <div class="d-flex justify-content-end align-items-center">
                         {% block header_nav %}
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'ask' %}" class="btn btn-sm btn-primary me-3">Ask a Question</a>
+                            <a href="{% url 'profile' %}" class="d-flex align-items-center text-white text-decoration-none me-2">
+                                {% if user.profile.avatar %}
+                                <img src="{{ user.profile.avatar.url }}" alt="Avatar" class="rounded-circle me-2" width="40" height="40">
+                                {% else %}
+                                <img src="{% static 'core/static/img/avatar.jpg' %}" alt="Avatar" class="rounded-circle me-2" width="40" height="40">
+                                {% endif %}
+                                <span class="d-none d-md-inline">{{ user.username }}</span>
+                            </a>
+                            <form method="post" action="{% url 'logout' %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-light">Log Out</button>
+                            </form>
+                        {% else %}
                             <a href="{% url 'login' %}" class="btn btn-sm btn-outline-light me-2">Log In</a>
                             <a href="{% url 'signup' %}" class="btn btn-sm btn-light">Sign Up</a>
+                        {% endif %}
                         {% endblock %}
                     </div>
                 </div>
