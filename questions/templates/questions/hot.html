@@ -1,0 +1,56 @@
+{% extends 'questions/base.html' %}
+{% load static %}
+
+{% block title %}Hot Questions - StackUnderflow{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Hot Questions</h2>
+    <a href="{% url 'index' %}" class="btn btn-outline-secondary">New Questions</a>
+</div>
+
+{% for question in page %}
+<div class="card mb-3 question-card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-1 col-2 text-center">
+                <img src="{% static 'questions/static/img/avatar.jpg' %}" alt="Avatar"
+                    class="rounded-circle img-fluid mb-2" width="60" height="60">
+            </div>
+            <div class="col-md-11 col-10">
+                <h5 class="card-title">
+                    <a href="{% url 'question' question.id %}" class="text-decoration-none">{{ question.title }}</a>
+                </h5>
+                <p class="card-text">{{ question.text }}</p>
+                <div class="d-flex flex-wrap align-items-center gap-3">
+                    <div class="vote-widget">
+                        {% if user.is_authenticated %}
+                        <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
+                        <span class="mx-2 fw-bold">{{ question.votes }}</span>
+                        <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
+                        {% else %}
+                        <button class="btn btn-sm btn-outline-success" disabled title="Войдите, чтобы голосовать"><span>👍</span></button>
+                        <span class="mx-2 fw-bold">{{ question.votes }}</span>
+                        <button class="btn btn-sm btn-outline-danger" disabled title="Войдите, чтобы голосовать"><span>👎</span></button>
+                        {% endif %}
+                    </div>
+                    <span class="text-muted">
+                        <a href="{% url 'question' question.id %}" class="text-decoration-none">Answers: {{ question.answers_count }}</a>
+                    </span>
+                    <div class="tags">
+                        {% for tag in question.tags.all %}
+                        <a href="{% url 'tag' tag %}" class="badge bg-secondary text-decoration-none">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    <span class="text-muted ms-auto">{{ question.created_at }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<p class="text-muted">No questions yet.</p>
+{% endfor %}
+
+{% include 'questions/includes/pagination.html' %}
+{% endblock %}

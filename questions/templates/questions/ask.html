@@ -1,0 +1,67 @@
+{% extends 'questions/base.html' %}
+
+{% block title %}Ask a Question - StackUnderflow{% endblock %}
+
+{% block layout %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <h2 class="mb-4">Ask a Question</h2>
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.title.id_for_label }}" class="form-label">
+                            Question Title <span class="text-danger">*</span>
+                        </label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for error in form.title.errors %}{{ error }}{% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="form-text">Try to formulate the question clearly and concisely.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.text.id_for_label }}" class="form-label">
+                            Detailed Description <span class="text-danger">*</span>
+                        </label>
+                        {{ form.text }}
+                        {% if form.text.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for error in form.text.errors %}{{ error }}{% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="form-text">Include all necessary details and what you've already tried.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.tags.id_for_label }}" class="form-label">Tags</label>
+                        {{ form.tags }}
+                        {% if form.tags.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for error in form.tags.errors %}{{ error }}{% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="form-text">Enter up to 5 tags separated by commas.</div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Publish Question</button>
+                        <a href="{% url 'index' %}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
