@@ -12,15 +12,31 @@ from .models import Answer, AnswerLike, Question, QuestionLike, Tag
 from .utils import paginate
 
 
+def _attach_question_votes(page, user):
+    if not user.is_authenticated:
+        for q in page:
+            q.user_vote = 0
+        return
+    q_ids = [q.pk for q in page]
+    vote_map = {
+        ql.question_id: ql.value
+        for ql in QuestionLike.objects.filter(user=user, question_id__in=q_ids)
+    }
+    for q in page:
+        q.user_vote = vote_map.get(q.pk, 0)
+
+
 def index(request):
     questions = Question.objects.new()
     page = paginate(questions, request)
+    _attach_question_votes(page, request.user)
     return render(request, 'questions/index.html', {'page': page})
 
 
 def hot(request):
     questions = Question.objects.hot()
     page = paginate(questions, request)
+    _attach_question_votes(page, request.user)
     return render(request, 'questions/hot.html', {'page': page})
 
 
@@ -28,6 +44,7 @@ def tag(request, tag_name):
     get_object_or_404(Tag, name=tag_name)
     questions = Question.objects.by_tag(tag_name)
     page = paginate(questions, request)
+    _attach_question_votes(page, request.user)
     return render(request, 'questions/tag.html', {'page': page, 'tag_name': tag_name})
 
 
