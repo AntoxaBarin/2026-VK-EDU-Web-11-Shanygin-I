@@ -20,11 +20,13 @@
                 <h2 class="card-title mb-3">{{ question.title }}</h2>
                 <p class="card-text">{{ question.text }}</p>
                 <div class="d-flex flex-wrap align-items-center gap-3 mt-3">
-                    <div class="vote-widget">
+                    <div class="vote-widget"
+                         data-url="{% url 'vote_question' question.pk %}"
+                         data-user-vote="{{ question_user_vote }}">
                         {% if user.is_authenticated %}
-                        <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">{{ question.votes }}</span>
-                        <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
+                        <button class="btn btn-sm {% if question_user_vote == 1 %}btn-success{% else %}btn-outline-success{% endif %} vote-up"><span>👍</span></button>
+                        <span class="mx-2 fw-bold vote-count">{{ question.votes }}</span>
+                        <button class="btn btn-sm {% if question_user_vote == -1 %}btn-danger{% else %}btn-outline-danger{% endif %} vote-down"><span>👎</span></button>
                         {% else %}
                         <button class="btn btn-sm btn-outline-success" disabled title="Войдите, чтобы голосовать"><span>👍</span></button>
                         <span class="mx-2 fw-bold">{{ question.votes }}</span>
@@ -61,21 +63,29 @@
             <div class="col-md-11 col-10">
                 <p class="card-text">{{ answer.text }}</p>
                 <div class="d-flex align-items-center gap-3 mt-3">
-                    <div class="vote-widget">
+                    <div class="vote-widget"
+                         data-url="{% url 'vote_answer' answer.pk %}"
+                         data-user-vote="{{ answer.user_vote }}">
                         {% if user.is_authenticated %}
-                        <button class="btn btn-sm btn-outline-success"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">{{ answer.votes }}</span>
-                        <button class="btn btn-sm btn-outline-danger"><span>👎</span></button>
+                        <button class="btn btn-sm {% if answer.user_vote == 1 %}btn-success{% else %}btn-outline-success{% endif %} vote-up"><span>👍</span></button>
+                        <span class="mx-2 fw-bold vote-count">{{ answer.votes }}</span>
+                        <button class="btn btn-sm {% if answer.user_vote == -1 %}btn-danger{% else %}btn-outline-danger{% endif %} vote-down"><span>👎</span></button>
                         {% else %}
                         <button class="btn btn-sm btn-outline-success" disabled title="Войдите, чтобы голосовать"><span>👍</span></button>
-                        <span class="mx-2 fw-bold">{{ answer.votes }}</span>
+                        <span class="mx-2 fw-bold vote-count">{{ answer.votes }}</span>
                         <button class="btn btn-sm btn-outline-danger" disabled title="Войдите, чтобы голосовать"><span>👎</span></button>
                         {% endif %}
                     </div>
-                    {% if answer.is_correct %}
-                    <button class="btn btn-sm btn-success">✓ Correct Answer</button>
+                    {% if user.is_authenticated and user == question.author %}
+                    <button class="btn btn-sm {% if answer.is_correct %}btn-success{% else %}btn-outline-secondary{% endif %} mark-correct-btn"
+                            data-url="{% url 'mark_correct' answer.pk %}"
+                            data-answer-id="{{ answer.pk }}">
+                        {% if answer.is_correct %}✓ Correct Answer{% else %}Mark as Correct{% endif %}
+                    </button>
                     {% else %}
-                    <button class="btn btn-sm btn-outline-secondary">Mark as Correct</button>
+                    {% if answer.is_correct %}
+                    <button class="btn btn-sm btn-success" disabled>✓ Correct Answer</button>
+                    {% endif %}
                     {% endif %}
                     <span class="text-muted ms-auto">{{ answer.created_at }}</span>
                 </div>
@@ -113,4 +123,81 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    const csrfToken = document.cookie.match(/csrftoken=([^;]+)/)?.[1] ?? '';
+
+    async function postJson(url, body) {
+        const resp = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify(body),
+        });
+        if (!resp.ok) throw new Error(resp.statusText);
+        return resp.json();
+    }
+
+    document.querySelectorAll('.vote-widget[data-url]').forEach(widget => {
+        const upBtn = widget.querySelector('.vote-up');
+        const downBtn = widget.querySelector('.vote-down');
+        const countEl = widget.querySelector('.vote-count');
+        const url = widget.dataset.url;
+
+        function applyVote(vote) {
+            widget.dataset.userVote = vote;
+            if (vote === 1) {
+                upBtn.classList.replace('btn-outline-success', 'btn-success');
+                downBtn.classList.replace('btn-danger', 'btn-outline-danger');
+            } else if (vote === -1) {
+                downBtn.classList.replace('btn-outline-danger', 'btn-danger');
+                upBtn.classList.replace('btn-success', 'btn-outline-success');
+            } else {
+                upBtn.classList.replace('btn-success', 'btn-outline-success');
+                downBtn.classList.replace('btn-danger', 'btn-outline-danger');
+            }
+        }
+
+        async function handleVote(value) {
+            try {
+                const data = await postJson(url, {value});
+                countEl.textContent = data.votes;
+                applyVote(data.user_vote);
+            } catch (e) {
+                console.error('Vote failed', e);
+            }
+        }
+
+        if (upBtn) upBtn.addEventListener('click', () => handleVote(1));
+        if (downBtn) downBtn.addEventListener('click', () => handleVote(-1));
+    });
+
+    document.querySelectorAll('.mark-correct-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const url = btn.dataset.url;
+            const answerId = btn.dataset.answerId;
+            try {
+                const data = await postJson(url, {});
+                const card = document.getElementById('answer-' + answerId);
+                if (data.is_correct) {
+                    btn.textContent = '✓ Correct Answer';
+                    btn.classList.replace('btn-outline-secondary', 'btn-success');
+                    card.classList.add('border-success');
+                } else {
+                    btn.textContent = 'Mark as Correct';
+                    btn.classList.replace('btn-success', 'btn-outline-secondary');
+                    card.classList.remove('border-success');
+                }
+            } catch (e) {
+                console.error('Mark correct failed', e);
+            }
+        });
+    });
+})();
+</script>
 {% endblock %}
