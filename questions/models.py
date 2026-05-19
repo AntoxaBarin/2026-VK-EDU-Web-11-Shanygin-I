@@ -101,6 +101,10 @@ class Answer(models.Model):
 
 
 class QuestionLike(models.Model):
+    LIKE = 1
+    DISLIKE = -1
+    VALUE_CHOICES = [(LIKE, "Like"), (DISLIKE, "Dislike")]
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -109,6 +113,9 @@ class QuestionLike(models.Model):
     )
     question = models.ForeignKey(
         Question, on_delete=models.CASCADE, related_name="likes", verbose_name="Вопрос"
+    )
+    value = models.SmallIntegerField(
+        choices=VALUE_CHOICES, default=LIKE, verbose_name="Значение"
     )
 
     class Meta:
@@ -121,6 +128,10 @@ class QuestionLike(models.Model):
 
 
 class AnswerLike(models.Model):
+    LIKE = 1
+    DISLIKE = -1
+    VALUE_CHOICES = [(LIKE, "Like"), (DISLIKE, "Dislike")]
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -129,6 +140,9 @@ class AnswerLike(models.Model):
     )
     answer = models.ForeignKey(
         Answer, on_delete=models.CASCADE, related_name="likes", verbose_name="Ответ"
+    )
+    value = models.SmallIntegerField(
+        choices=VALUE_CHOICES, default=LIKE, verbose_name="Значение"
     )
 
     class Meta:

@@ -73,8 +73,9 @@ class AnswerAdmin(admin.ModelAdmin):
 
 @admin.register(QuestionLike)
 class QuestionLikeAdmin(admin.ModelAdmin):
-    list_display = ("user", "question")
+    list_display = ("user", "question", "value")
     search_fields = ("user__username", "question__title")
+    list_filter = ("value",)
     raw_id_fields = ("user", "question")
 
     def get_queryset(self, request):
@@ -83,8 +84,9 @@ class QuestionLikeAdmin(admin.ModelAdmin):
 
 @admin.register(AnswerLike)
 class AnswerLikeAdmin(admin.ModelAdmin):
-    list_display = ("user", "answer")
+    list_display = ("user", "answer", "value")
     search_fields = ("user__username",)
+    list_filter = ("value",)
     raw_id_fields = ("user", "answer")
 
     def get_queryset(self, request):
